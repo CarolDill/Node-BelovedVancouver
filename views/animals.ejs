@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dogs Manager</title>
+</head>
+<body>
+    <a href="/users/logout">Logout</a>
+
+    <h1>Dashboard</h1>
+    <h2>Hello <%= user %></h2>
+
+    <ul>
+        <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+        <li><%= error.message %></li>
+        <% }) %> <% } %>
+    </ul>
+
+    <br>
+    <h3>Add New Pet</h3>
+    <form action="/users/dashboard/animals" method="post">
+        <div class="label-float">
+            <input type="text" id="pet_name" name="pet_name">
+            <label for="pet_name">Name</label>
+        </div>
+        <div class="label-float">
+            <input type="number" step="0.1" id="pet_age" name="pet_age">
+            <label for="pet_age">Age</label>
+        </div>
+        <div class="label-float">
+            <input type="number" step="0.1" id="pet_weight" name="pet_weight">
+            <label for="pet_weight">Weight</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="pet_type" name="pet_type">
+            <label for="pet_type">Type</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="pet_breed" name="pet_breed">
+            <label for="pet_breed">Breed</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="pet_additional_info" name="pet_additional_info">
+            <label for="pet_additional_info">Additional Info</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="pet_picture" name="pet_picture">
+            <label for="pet_picture">Pet picture (url)</label>
+        </div>
+        <div>
+            <button>Save</button>
+        </div>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <h3>Listed Pets</h3>
+
+    <% for(let i = 0; i < animals.length; i++) { %>
+            <h4><%= animals[i].pet_name %></h4>
+            <p><%= animals[i].age %></p>
+            <p><%= animals[i].weight %></p>
+            <p><%= animals[i].type %></p>
+            <p><%= animals[i].breed %></p>
+            <p><%= animals[i].additional %></p>
+            <p><%= animals[i].picture %></p>
+            <form action='/users/dashboard/animals/<%= animals[i].id%>?_method=DELETE' method="post">
+                <button type="submit">Delete pet</button>
+            </form>
+            <hr>
+    <% } %>
+
+
+</body>
+</html>

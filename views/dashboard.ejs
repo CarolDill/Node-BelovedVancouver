@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function checkDate(e){
+            let selectedDate = e.target.value;
+            console.log(selectedDate);
+           var currentDate = formatDate(new Date());
+           console.log(currentDate);
+
+            if(selectedDate <= currentDate){
+                alert("Event date can not be earlier than current date.");
+            }
+
+            return;
+        }
+
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) 
+                month = '0' + month;
+            if (day.length < 2) 
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+    </script>
+    <a href="/users/logout">Logout</a>
+    <a href="/users/dashboard/animals">Manage Pets</a>
+    <a href="/users/dashboard/news">Manage News</a>
+    <br>
+    <h1>Dashboard</h1>
+    <h2>Hello <%= user %></h2>
+
+    <ul>
+        <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+        <li><%= error.message %></li>
+        <% }) %> <% } %>
+    </ul>
+
+    <br>
+    <h3>Add New Event</h3>
+    <form action="/users/dashboard" method="post">
+        <div class="label-float">
+            <input type="text" id="title" name="title">
+            <label for="user">Title</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="address" name="address">
+            <label for="address">Adress</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="description" name="description">
+            <label for="description">Description</label>
+        </div>
+        <div class="label-float">
+            <input type="date" id="date" name="date" onchange="checkDate(event)">
+            <label for="date">Date</label>
+        </div>
+        <div>
+            <button>Save</button>
+        </div>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <h3>Listed Events</h3>
+
+    <% for(let i = 0; i < events.length; i++) { %>
+            <h4><%= events[i].title %></h4>
+            <p><%= events[i].address %></p>
+            <p><%= events[i].event_date %></p>
+            <br>
+            <p><%= events[i].description %></p>
+            <form action='/users/dashboard/<%= events[i].event_id%>?_method=DELETE' method="post">
+                <button type="submit">Delete event</button>
+            </form>
+            <hr>
+    <% } %>
+
+
+</body>
+</html>

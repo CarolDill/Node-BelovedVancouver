@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <title>Vancouver Shelter</title>
+</head>
+<body>
+    <header class="headerwrapper reduced">
+        <div class="container-header">
+            <div class="inner-header-container header-sticky" id="stickyheader">
+                <div class="header-section">
+                    <div class="logo-img">
+                        <a href="/index"><img src="css/images/logo_.png"></a>
+                    </div>
+                    <div class="header-texts">
+                        <p>Vancouver</p>
+                        <p>Beloved Shelter</p>
+                    </div>
+                </div>
+                <div class="menu-toggle">
+                    <nav class="navbar">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/index" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/about" class="nav-link" id="active">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/team" class="nav-link">Our Team</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/events" class="nav-link">Events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/adopt" class="nav-link">Adopt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/volunteer" class="nav-link">Volunteer</a>
+                            </li>
+                        </ul>
+                        <div class="hamburger">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="header-content small">
+            <div class="content-container">
+                <p>About us</p>
+                <h1>Our past actions reflect our commitment towards the future</h1>
+            </div>
+        </div>
+        <div class="button-area">
+            <div class="donate-button">
+                <button name="submit" class="donatebutton"><span>Donate Now</span></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="history">
+            <div class="section_wrapper">
+                <div class="history-texts">
+                    <h2>We have been trying to find a home for every animal since 1992</h2>
+                    <p>Our organization helps animals in the greater area of Vancouver to get a second chance in life and find a loving family. Thousands of pets have already got a new home.</p>
+                    <p>&nbsp;</p>
+                    <ul>
+                        <li><i class="fa-solid fa-chevron-right"></i>You can help in several different manners</li>
+                        <li><i class="fa-solid fa-chevron-right"></i>Participate in events and voluteer, being a foster or helping in our events</li>
+                        <li><i class="fa-solid fa-chevron-right"></i>Donate online and help us to improve the services we provide</li>
+                    </ul>
+                </div>
+                <div class="history-img">
+                    <img src="css/images/dog_frontpage.jpg" alt="A yellowish dog lying on the carpet, in a crack of sun">
+                </div>
+            </div>
+        </section>
+        <section class="testimonials">
+            <div class="row">
+                <p>Testimonials</p>
+                <h2>What People Say About Us</h2>
+                <hr>
+            </div>
+            <div class="testimony_wrapper">
+                <div class="testimony">
+                    <i class="start-quote fas fa-quote-left" id="quotes"></i>
+                    <blockquote>
+                        "I was moved when I first met the organization. Beloved Vancouver does an amazing job with animals in the area. Not only I know I have now a loving puppy, but I know he was taken care of and I have all the information I need to take care of him"
+                    </blockquote>
+                    <div id="divider">
+                        <hr>
+                    </div>
+                    <cite>Ana Lucia</cite>
+                </div>
+                <div class="testimony">
+                    <i class="start-quote fas fa-quote-left" id="quotes"></i>
+                    <blockquote>
+                        "Beloved Vancouver let you know all you need to make a good decision. The support to even have the puppy castrated when the time comes is something else! The profiles are well evaluated to make a perfect match"
+                    </blockquote>
+                    <div id="divider">
+                        <hr>
+                    </div>
+                    <cite>Mike Kyle</cite>
+                </div>
+            </div>
+        </section>
+        <section class="news">
+            <div class="row">
+                <p>From Blog</p>
+                <h2>Latest News</h2>
+                <hr>
+            </div>
+            <div class="news-container">
+                <% if (typeof news != 'undefined') { %> 
+                    <% for(let i = 0; i < news.length; i++) { %>
+                        <div class="news_wrapper">
+                            <h3><%= news[i].title %></h3>
+                            <div class="new_image">
+                                <img src="<%= news[i].picture %>">
+                            </div>
+                            <p><p><%= news[i].description %></p></p>
+                            <br>
+                            <hr>
+                            <br>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+            <div class="load_more">
+                <button id="load-more-btn"><span>More</span></button>
+            </div>
+        </section>
+        <section class="contact">
+            <div class="row">
+                <hr>
+                <p id="black">Do not hesitate in contact us</p>
+                <br>
+                <p>phone us at</p>
+                <p id="black">(778) 123 4567</p>
+                <br>
+                <p>Email us at</p>
+                <p id="black">contact@belovedshelter.com</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="logo-footer">
+            <div class="logo-footer-img">
+                <a href="/index"><img src="css/images/logo_white.png"></a>
+            </div>
+            <div class="header-texts">
+                <p>Vancouver</p>
+                <p>Beloved Shelter</p>
+            </div>
+        </div>
+        <div class="icons-footer">
+            <a href="#"><i class="fa-brands fa-instagram-square fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook-square fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-snapchat-square fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+        </div>
+        <div class="copyright-footer">
+            <p>&copy;Copyright | Caroline 2022.</p>
+        </div>
+    </footer>
+    <script src="/scripts/scripts.js"></script>
+    <script src="https://kit.fontawesome.com/1ce1c0ec70.js" crossorigin="anonymous"></script>
+</body>
+</html>

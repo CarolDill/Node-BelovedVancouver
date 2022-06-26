@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='/css/fullcalendar/main.css' rel='stylesheet' />
+    <script src='/scripts/main.js'></script>
+    
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <title>Vancouver Shelter</title>
+</head>
+<body>
+    <script>
+        function submit(event){
+            document.getElementById('hide').submit();
+            console.log("submit event worked");
+            event.preventDefault(); // put it at the end to prevent page reload
+        }
+    </script>
+    <header class="headerwrapper reduced">
+        <div class="container-header">
+            <div class="inner-header-container header-sticky" id="stickyheader">
+                <div class="header-section">
+                    <div class="logo-img">
+                        <a href="index.html"><img src="css/images/logo_.png"></a>
+                    </div>
+                    <div class="header-texts">
+                        <p>Vancouver</p>
+                        <p>Beloved Shelter</p>
+                    </div>
+                </div>
+                <div class="menu-toggle">
+                    <nav class="navbar">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="/about" class="nav-link">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/team" class="nav-link">Our Team</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/events" class="nav-link" id="active">Events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/adopt" class="nav-link">Adopt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/volunteer" class="nav-link">Volunteer</a>
+                            </li>
+                        </ul>
+                        <div class="hamburger">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="header-content small">
+            <div class="content-container">
+                <p>Our Team</p>
+                <h1>Staff & Volunteers</h1>
+            </div>
+        </div>
+        <div class="button-area">
+            <div class="donate-button">
+                <button name="submit" class="donatebutton"><span>Donate Now</span></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="events">
+            <div class="events_wrapper">
+                <div class="row">
+                    <p>Events</p>
+                    <h2>Check out our next Events</h2>
+                    <hr>
+                </div>
+                <div class="calendar_container">
+                    <div id="calendar"></div>
+                </div>
+                <div class="hide">
+                    <form id="hide" action="/events" method="post">
+                        <input id="event_date" type="date" name="date">
+                        <button type="submit" id="event_submit" >submit</button>
+                    </form>
+                </div>
+                <div class="calendar_content">
+                        <% if (typeof events != 'undefined') { %> 
+                            <% for(let i = 0; i < events.length; i++) { %>
+                                <div class="event_text">
+                                    <h3><%= events[i].title %></h3>
+                                    <br>
+                                    <p><%= events[i].address %></p>
+                                    <p><%= events[i].date %></p>
+                                    <p><%= events[i].description %></p>
+                                    <hr>
+                                </div>
+                            <% } %>
+                        <% } %>
+                </div>
+            </div>
+        </section>
+        <section class="values">
+            <div class="introduction-values">
+                <h2>These are the values that guide our work</h2>
+                <p>Know a little more of why we do what we do</p>
+            </div>
+            <div class="values-wrapper">
+                <div class="value">
+                    <img src="css/images/mission.png" alt="The draw of a target on transparent background">
+                    <h3>Our Mission</h3>
+                    <p>We want to find a home for every single abandonned animal in great Vancouver area. An empty shelter would be a very happy place.</p>
+                </div>
+                <div class="value">
+                    <img src="css/images/vision.png" alt="The draw of an eye">
+                    <h3>Our Vision</h3>
+                    <p>We aim to be seen as a reference when it comes to finding a home for abandonned animals</p>
+                </div>
+                <div class="value">
+                    <img src="css/images/values.png" alt="The draw of a diamond">
+                    <h3>Our Values</h3>
+                    <p>We are passionate! The love for all animals and their uniqueness are gears to remember why we do this every single day.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="logo-footer">
+            <div class="logo-footer-img">
+                <a href="index.html"><img src="css/images/logo_white.png"></a>
+            </div>
+            <div class="header-texts">
+                <p>Vancouver</p>
+                <p>Beloved Shelter</p>
+            </div>
+        </div>
+        <div class="icons-footer">
+            <a href="#"><i class="fa-brands fa-instagram-square fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook-square fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-snapchat-square fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+        </div>
+        <div class="copyright-footer">
+            <p>&copy;Copyright | Caroline 2022.</p>
+        </div>
+    </footer>
+    <script src="/scripts/scripts.js"></script>
+    <script src="https://kit.fontawesome.com/1ce1c0ec70.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Manager</title>
+</head>
+<body>
+    <a href="/users/logout">Logout</a>
+
+    <h1>Dashboard</h1>
+    <h2>Hello <%= user %></h2>
+
+    <ul>
+        <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+        <li><%= error.message %></li>
+        <% }) %> <% } %>
+    </ul>
+
+    <br>
+    <h3>Add New</h3>
+    <form action="/users/dashboard/news" method="post">
+        <div class="label-float">
+            <input type="text" id="news_title" name="news_title">
+            <label for="news_title">News title</label>
+        </div>
+        
+        <div class="label-float">
+            <input type="text" id="news_description" name="news_description">
+            <label for="news_description">News text</label>
+        </div>
+        <div class="label-float">
+            <input type="text" id="news_picture" name="news_picture">
+            <label for="news_picture">News picture (url)</label>
+        </div>
+        <div>
+            <button>Save</button>
+        </div>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <h3>Listed News</h3>
+
+    <% for(let i = 0; i < news.length; i++) { %>
+            <h4><%= news[i].title %></h4>
+            <p><%= news[i].description %></p>
+            <p><%= news[i].picture %></p>
+            <form action='/users/dashboard/news/<%= news[i].id%>?_method=DELETE' method="post">
+                <button type="submit">Delete news</button>
+            </form>
+            <hr>
+    <% } %>
+
+
+</body>
+</html>
