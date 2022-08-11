@@ -7,6 +7,7 @@ const session = require("express-session");
 require("dotenv").config();
 const app = express();
 const path = require('node:path');
+const mailer = require('./modules/mailer');
 
 const PORT = process.env.PORT || 4000;
 
@@ -24,9 +25,8 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(methodOverride('_method')); // looks in our requests for query string of '_method'. It will change the HTTP method's type to whatever is stored as that query string _method
-// ?_method=delete :: makes method path into delete request
-// ?_method=put :: makes method path into put request 
+app.use(methodOverride('_method')); 
+
 
 app.use(
   session({
@@ -76,7 +76,6 @@ app.get("/users/register", checkAuthenticated, (req, res) => {
 
 app.get("/users/login", checkAuthenticated, (req, res) => {
   // flash sets a messages variable. passport sets the error message
-  // console.log(req.session.flash.error);
   res.render("login.ejs");
 });
 
@@ -114,7 +113,6 @@ app.post("/users/dashboard", checkNotAuthenticated, (req, res) => {
   }
 
 
-  // res.render("dashboard", { user: req.user.name, errors });
   res.redirect("dashboard");
 });
 
@@ -125,10 +123,44 @@ app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
         console.log(err);
         return;
       }
-      // console.log(rows.rows);
       res.render("dashboard", { user: req.user.name, events:rows.rows });
     }
   )
+});
+
+app.post("/email", (req, res)=>{
+  let { email, name, phone, address, city, shelter, foster, message } = req.body;
+
+  if (!email || !name || !phone || !address || !city || !message ){
+    res.redirect("/volunteer");
+  }else{
+    mailer.sendMail({
+      to: email,
+      from: 'test@belovedvancouver.com',
+      subject: 'Thank you for your interest',
+      text: 'Thank you for your interest in being a volunteer! Someone of our team will review your application soon. Att Beloved Vancouver.'
+    }, (err)=>{
+      if (err){
+        console.log("erro");
+        res.redirect("/volunteer");
+      }
+  
+      mailer.sendMail({
+        to: 'test@belovedvancouver.com',
+        from: email,
+        subject: 'New volunteer application received',
+        text: `Name: ${name},
+              Phone: ${phone},
+              Address: ${address},
+              City: ${city},
+              Shelter? ${shelter},
+              Foster? ${foster},
+              Email: ${email},
+              Message: ${message}`
+      })
+    });
+    res.redirect("/volunteer");
+  }
 });
 
 app.delete("/users/dashboard/:id", (req, res)=>{
@@ -148,7 +180,7 @@ app.delete("/users/dashboard/:id", (req, res)=>{
 app.post("/users/dashboard/animals", checkNotAuthenticated, (req, res) => {
   console.log(req.isAuthenticated());
   let { pet_name, pet_age, pet_weight, pet_type, pet_breed, pet_additional_info, pet_picture } = req.body;
-  // let user_id = req.user.id;
+
   console.log({ pet_name, pet_age, pet_weight, pet_type, pet_breed, pet_additional_info, pet_picture });
 
   pool.query(
@@ -159,7 +191,7 @@ app.post("/users/dashboard/animals", checkNotAuthenticated, (req, res) => {
       }
     }
   );
-  // res.render("dashboard", { user: req.user.name, errors });
+
   res.redirect("animals");
 });
 
@@ -171,7 +203,7 @@ app.get("/users/dashboard/animals", checkNotAuthenticated, (req, res) => {
         console.log(err);
         return;
       }
-      // console.log(rows.rows);
+
       res.render("animals", { user: req.user.name, animals:rows.rows });
     }
   )
@@ -208,7 +240,7 @@ app.get("/adopt", (req, res) => {
 app.post("/users/dashboard/news", checkNotAuthenticated, (req, res) => {
   console.log(req.isAuthenticated());
   let { news_title, news_description, news_picture } = req.body;
-  // let user_id = req.user.id;
+
   console.log({ news_title, news_description, news_picture });
 
   pool.query(
@@ -219,7 +251,7 @@ app.post("/users/dashboard/news", checkNotAuthenticated, (req, res) => {
       }
     }
   );
-  // res.render("dashboard", { user: req.user.name, errors });
+
   res.redirect("news");
 });
 
@@ -231,7 +263,7 @@ app.get("/users/dashboard/news", checkNotAuthenticated, (req, res) => {
         console.log(err);
         return;
       }
-      // console.log(rows.rows);
+
       res.render("news", { user: req.user.name, news:rows.rows });
     }
   )
@@ -253,8 +285,6 @@ app.delete("/users/dashboard/news/:id", (req, res)=>{
 
 app.get('/getcalendar', (req, res) => {
   console.log("getcalendar method");
-  
-  // let events = [];
 
   pool.query(
     `SELECT * FROM calendarevents`, (err, rows, fields)=>{
@@ -275,7 +305,6 @@ app.get("/events", (req, res)=>{
 
 app.post("/events", (req,res) => {
   let { date}  = req.body;
-  // console.log("rota acionada");
   if (date){
     pool.query(
       `SELECT * FROM events WHERE event_date = $1`, [date], (err, rows, fields)=>{
@@ -293,13 +322,9 @@ app.post("/events", (req,res) => {
 });
 
 app.get("/users/logout", (req, res) => {
-  // req.logout();
-  // // res.render("index", { message: "You have logged out successfully" });
-  // req.flash("success_msg", "You have successfully logged out.");
   req.session.destroy(function (err) {
-    res.redirect("/"); //Inside a callback… bulletproof!
+    res.redirect("/index"); 
   });
-  // res.redirect("/users/login");
 });
 
 app.post("/users/register", async (req, res) => {

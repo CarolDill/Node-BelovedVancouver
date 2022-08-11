@@ -166,17 +166,17 @@
                     <p>New Volunteer</p>
                     <p>All the information is required</p>
                 </div>
-                <form action="get">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Name *">
-                    <label>Email</label>
-                    <input type="email"placeholder="Email *">
-                    <label>Phone Number</label>
-                    <input type="tel" placeholder="Phone Number *">
-                    <label>Adress</label>
-                    <input type="text" placeholder="Address *">
-                    <label>City</label>
-                    <input type="text" placeholder="City">
+                <form action="/email" method="post">
+                    <input type="text" name="name" id="name" placeholder="Name *">
+                    <label for="name">Full Name</label>
+                    <input type="email" name="email" id="email" placeholder="Email *">
+                    <label for="email">Email</label>
+                    <input type="tel" name="phone" id="phone" placeholder="Phone Number *">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" name="address" id="address" placeholder="Address *">
+                    <label for="address">Adress</label>
+                    <input type="text" name="city" id="city" placeholder="City">
+                    <label for="city">City</label>
                     <fieldset>
                         <label>Volunteer type</label>
                         <input type="checkbox" name="shelter" id="shelter" value="shelter">
@@ -188,7 +188,7 @@
                     <textarea name="message" id="message" cols="30" rows="10" placeholder="Message:"></textarea>
                     <br>
                     <div class="load_more">
-                        <button type="submit"><span>Submit</span></button>
+                        <button type="submit" id="volunteerBtn" onclick="checkForm()"><span>Submit</span></button>
                     </div>
                 </form>
             </div>
@@ -214,6 +214,22 @@
             <p>&copy;Copyright | Caroline 2022.</p>
         </div>
     </footer>
+    <script>
+        //Check volunteer form if empty
+        function checkForm(name, email, phone, address, city, message){
+            name = document.getElementById("name");
+            email = document.getElementById("email");
+            phone = document.getElementById("phone");
+            address = document.getElementById("address");
+            city = document.getElementById("city");
+            message = document.getElementById("message");
+
+            if (name.value== "" || email.value=="" || phone.value=="" || address.value=="" || city.value=="" || message.value==""){
+                alert("Please fill out all the form, thank you!");
+                return;
+            }
+        }
+    </script>
     <script src="/scripts/scripts.js"></script>
     <script src="https://kit.fontawesome.com/1ce1c0ec70.js" crossorigin="anonymous"></script>
 </body>
